@@ -19,9 +19,12 @@
       { "extensions": [".tsx", ".jsx"] }
     ],
     "react/jsx-indent": ["warn", 4],
+    "react/jsx-indent-props": ["off"],
+    "react/jsx-props-no-spreading": ["off"],
     "no-unused-vars": "warn"
   },
   "env": {
-    "browser": true
+    "browser": true,
+    "jest": true
   }
 }
