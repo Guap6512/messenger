@@ -1,0 +1,27 @@
+{
+  "parser": "@typescript-eslint/parser",
+  "extends": ["airbnb", "prettier"],
+  "plugins": ["prettier"],
+  "settings": {
+    "import/resolver": {
+      "node": {
+        "extensions": [".js", ".jsx", ".ts", ".tsx"]
+      }
+    }
+  },
+  "rules": {
+    "prettier/prettier": ["error"],
+    "import/extensions": ["error", "never"],
+    "import/no-default-export": ["warn"],
+    "import/prefer-default-export": ["off"],
+    "react/jsx-filename-extension": [
+      "warn",
+      { "extensions": [".tsx", ".jsx"] }
+    ],
+    "react/jsx-indent": ["warn", 4],
+    "no-unused-vars": "warn"
+  },
+  "env": {
+    "browser": true
+  }
+}
