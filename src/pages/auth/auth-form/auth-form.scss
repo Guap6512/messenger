@@ -1,0 +1,12 @@
+.auth-form {
+    min-width: 300px;
+    min-height: 200px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+
+    &__element {
+        width: 100%;
+        margin-bottom: 32px;
+    }
+}

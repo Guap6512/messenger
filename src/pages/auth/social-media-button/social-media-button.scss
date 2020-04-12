@@ -1,0 +1,14 @@
+.social-media-button {
+    height: 128px;
+    width: 128px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+
+    &__icon {
+        display: block;
+        width: 80%;
+        height: 80%;
+    }
+}

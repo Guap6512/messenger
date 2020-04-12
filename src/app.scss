@@ -1,0 +1,14 @@
+.app-container {
+    background-color: #212121;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+
+    &__content {
+        display: flex !important; // otherwise material ui style overrides it
+        align-items: center;
+        flex-direction: column;
+        justify-content: center;
+    }
+}
