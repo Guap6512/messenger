@@ -8,6 +8,7 @@ export const AuthAction = {
     REQUEST_CODE: 'REQUEST_CODE',
     SET_LOADING: 'SET_LOADING',
     SET_CODE_TYPE: 'SET_CODE_TYPE',
+    SIGN_IN: 'SIGN_IN',
 };
 
 export const TELEGRAM_CODE_TYPE = {

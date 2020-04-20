@@ -5,7 +5,15 @@ import {setAuthStage, setCodeType, setLoading} from './auth-actions';
 import {AuthStage} from './auth-types';
 import {getSocialMediaType} from './auth-selectors';
 import {SocialMediaType} from '../project-constants';
-import {setPhoneCodeHash, telegramSendCode} from '../telegram-api';
+import {
+    getPhone,
+    getPhoneCodeHash,
+    setPhone,
+    setPhoneCodeHash,
+    telegramGetAllChats,
+    telegramSendCode,
+    telegramSignIn,
+} from '../telegram-api';
 
 const ac = createActionTypeResolver(MODULE_NAMESPACE);
 
@@ -17,6 +25,7 @@ function* requestCodeWorker({payload: phone}) {
     const socialMediaType = yield select(getSocialMediaType);
     yield put(setLoading(true));
     if (socialMediaType === SocialMediaType.TELEGRAM) {
+        yield put(setPhone(phone));
         const response = yield call(telegramSendCode, phone);
         yield put(setAuthStage(AuthStage.ENTER_CODE));
         const responseCodeType = response.type._;
@@ -26,7 +35,20 @@ function* requestCodeWorker({payload: phone}) {
     }
 }
 
+function* signInWorker({payload: code}) {
+    const socialMediaType = yield select(getSocialMediaType);
+    if (socialMediaType === SocialMediaType.TELEGRAM) {
+        const phone = yield select(getPhone);
+        const phoneCodeHash = yield select(getPhoneCodeHash);
+
+        // TODO if response says "auth.authorizationSignUpRequired", open signUp form
+        const response = yield call(telegramSignIn, phone, code, phoneCodeHash);
+        const chats = yield call(telegramGetAllChats);
+    }
+}
+
 export function* authSaga() {
     yield takeLatest(ac(AuthAction.REQUEST_CODE), requestCodeWorker);
     yield takeLatest(ac(AuthAction.SET_TYPE), authWorker);
+    yield takeLatest(ac(AuthAction.SIGN_IN), signInWorker);
 }

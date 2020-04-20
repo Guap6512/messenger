@@ -10,3 +10,4 @@ export const setAuthStage = actionFactory<AuthStage>(AuthAction.SET_STAGE);
 export const requestCode = actionFactory<string>(AuthAction.REQUEST_CODE);
 export const setLoading = actionFactory<boolean>(AuthAction.SET_LOADING);
 export const setCodeType = actionFactory<CodeType>(AuthAction.SET_CODE_TYPE);
+export const signIn = actionFactory<string>(AuthAction.SIGN_IN);

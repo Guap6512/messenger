@@ -11,7 +11,10 @@ import {
 } from '../../modules/auth';
 import {SocialMediaType} from '../../modules/project-constants';
 import {AuthForm} from './auth-form';
-import {requestCode as requestCodeAction} from '../../modules/auth/auth-actions';
+import {
+    requestCode as requestCodeAction,
+    signIn as signInAction,
+} from '../../modules/auth/auth-actions';
 import {CodeType} from '../../modules/auth/auth-types';
 import {getIsLoading} from '../../modules/auth/auth-selectors';
 
@@ -20,6 +23,7 @@ interface AuthPageProps {
     authStage: AuthStage;
     setSocialMediaType: (type: SocialMediaType) => void;
     requestCode: (phone: string) => void;
+    signIn: (code: string) => void;
     responseCodeType?: CodeType;
     isLoading: boolean;
 }
@@ -31,6 +35,7 @@ const AuthPageComponent = ({
     requestCode,
     responseCodeType,
     isLoading,
+    signIn,
 }: AuthPageProps) => {
     const renderPageBody = () => {
         if (authStage === AuthStage.SELECT_TYPE)
@@ -38,6 +43,7 @@ const AuthPageComponent = ({
         if (socialMediaType !== undefined)
             return (
                 <AuthForm
+                    signIn={signIn}
                     responseCodeType={responseCodeType}
                     isLoading={isLoading}
                     requestCode={requestCode}
@@ -63,6 +69,7 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch => ({
     setSocialMediaType: type => dispatch(setSocialMediaTypeAction(type)),
     requestCode: phone => dispatch(requestCodeAction(phone)),
+    signIn: code => dispatch(signInAction(code)),
 });
 
 export const AuthPage = connect(mapStateToProps, mapDispatchToProps)(AuthPageComponent);

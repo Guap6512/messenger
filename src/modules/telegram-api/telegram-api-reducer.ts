@@ -11,6 +11,9 @@ export const telegramApiReducer = (state = initialState, {type, payload}) => {
         case ac(TelegramAction.SET_PHONE_CODE_HASH):
             return {...state, phoneCodeHash: payload};
 
+        case ac(TelegramAction.SET_PHONE):
+            return {...state, phone: payload};
+
         default:
             return state;
     }

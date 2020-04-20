@@ -7,10 +7,11 @@ import {CodeType} from '../../../modules/auth/auth-types';
 interface AuthFormProps {
     requestCode: (phone: string) => void;
     responseCodeType?: CodeType;
+    signIn: (code: string) => void;
     isLoading: boolean;
 }
 
-const TEST_PHONE_LENGTH = 12;
+const TEST_PHONE_LENGTH = 11;
 
 const CODE_HINT = {
     [CodeType.APP]: 'You will receive the code in app',
@@ -19,7 +20,7 @@ const CODE_HINT = {
     [CodeType.PHONE_NUMBER]: 'You need to enter the phone number that will ring you up soon',
 };
 
-export const AuthForm = ({requestCode, responseCodeType, isLoading}: AuthFormProps) => {
+export const AuthForm = ({requestCode, responseCodeType, isLoading, signIn}: AuthFormProps) => {
     const [phoneNumber, setPhoneNumber] = React.useState('7');
     const [code, setCode] = React.useState('');
     const [isPhoneValid, setPhoneValid] = React.useState(false);
@@ -33,8 +34,13 @@ export const AuthForm = ({requestCode, responseCodeType, isLoading}: AuthFormPro
         setCodeInputVisible(responseCodeType !== undefined);
     }, [responseCodeType]);
 
-    const onPhoneChange = ({target: {value}}) => setPhoneNumber(`+${value.replace(/\D/g, '')}`);
+    const onPhoneChange = ({target: {value}}) => setPhoneNumber(value.replace(/\D/g, ''));
     const onCodeChange = ({target: {value}}) => setCode(value);
+
+    const onSubmit = () => {
+        if (isCodeInputVisible) signIn(code);
+        else requestCode(phoneNumber);
+    };
 
     const isButtonDisabled = isLoading || !isPhoneValid;
 
@@ -45,6 +51,7 @@ export const AuthForm = ({requestCode, responseCodeType, isLoading}: AuthFormPro
                 <InputLabel htmlFor="phone-input">Phone number</InputLabel>
                 <Input
                     value={phoneNumber}
+                    disabled={isCodeInputVisible}
                     onChange={onPhoneChange}
                     name="phone-input"
                     id="phone-input"
@@ -69,11 +76,11 @@ export const AuthForm = ({requestCode, responseCodeType, isLoading}: AuthFormPro
             )}
             <Button
                 disabled={isButtonDisabled}
-                onClick={() => requestCode(phoneNumber)}
+                onClick={onSubmit}
                 color="primary"
                 variant="contained"
             >
-                Send Code
+                {isCodeInputVisible ? 'Check Code' : 'Send Code'}
             </Button>
         </form>
     );

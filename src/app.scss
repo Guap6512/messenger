@@ -5,8 +5,8 @@
     flex-direction: column;
     justify-content: center;
 
-    &__content {
-        display: flex !important; // otherwise material ui style overrides it
+    &__content.MuiContainer-root {
+        display: flex;
         align-items: center;
         flex-direction: column;
         justify-content: center;
